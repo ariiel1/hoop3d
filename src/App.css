@@ -1,4 +1,13 @@
-/* Add any necessary base styles here */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+button {
+  font-family: 'Poppins', sans-serif;
+}
+
 .App {
   text-align: center;
 }
@@ -140,7 +149,7 @@
   width: 75%;
   margin: auto;
   border-radius: 12px;
-  padding-bottom: 20px;
+  padding: 12px 0px;
   box-shadow: 0px 0px 10px 1px lightgray
 }
 
@@ -168,25 +177,4 @@
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
-}
-
-.url-update-page {
-  padding: 20px;
-}
-
-.url-update-page input {
-  width: 80%;
-  padding: 10px;
-  margin: 10px 0;
-  font-size: 16px;
-}
-
-.url-update-page button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border: none;
-  border-radius: 12px;
-  background-color: #61dafb;
-  color: white;
 }
