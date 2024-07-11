@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/hoop3d/static/css/main.051dcaca.css",
-    "main.js": "/hoop3d/static/js/main.f976d91d.js",
+    "main.js": "/hoop3d/static/js/main.bed9cfee.js",
     "static/js/453.6122c585.chunk.js": "/hoop3d/static/js/453.6122c585.chunk.js",
     "index.html": "/hoop3d/index.html",
     "main.051dcaca.css.map": "/hoop3d/static/css/main.051dcaca.css.map",
-    "main.f976d91d.js.map": "/hoop3d/static/js/main.f976d91d.js.map",
+    "main.bed9cfee.js.map": "/hoop3d/static/js/main.bed9cfee.js.map",
     "453.6122c585.chunk.js.map": "/hoop3d/static/js/453.6122c585.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.051dcaca.css",
-    "static/js/main.f976d91d.js"
+    "static/js/main.bed9cfee.js"
   ]
 }
