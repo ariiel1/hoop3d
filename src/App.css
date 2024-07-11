@@ -178,3 +178,22 @@ button {
   margin-left: auto;
   margin-right: auto;
 }
+
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 12px;
+  z-index: 1000;
+}
+
+.toast-success {
+  background-color: green;
+}
+
+.toast-error {
+  background-color: red;
+}

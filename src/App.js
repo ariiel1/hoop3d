@@ -11,6 +11,7 @@ import UploadSection from './UploadSection';
 import VideoPlayer from './VideoPlayer';
 import LoadingPopup from './LoadingPopup';
 import DetectedPlayers from './DetectedPlayers';
+import Toast from './Toast';
 
 const API_URL = "https://anteater-electric-truly.ngrok-free.app";
 
@@ -20,11 +21,17 @@ function App() {
   const [isPaused, setIsPaused] = useState(false);
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingMsg, setLoadingMsg] = useState('');
+  const [toast, setToast] = useState({ message: '', type: '', duration: 3000 });
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const sceneRef = useRef(null);
   const threeJsSceneRef = useRef(null);
   const rendererRef = useRef(null);
+
+  const showToast = (message, type, duration = 3000) => {
+    setToast({ message, type, duration });
+  };
 
   const onVideoDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -40,11 +47,13 @@ function App() {
     accept: 'video/*',
   });
 
+
   const handleRemoveVideo = () => {
     setVideoFile(null);
     setVideoURL('');
     setImages([]);
     clearThreeJsScene();
+    showToast("Video Removed", 'success');
   };
 
 
@@ -63,6 +72,7 @@ function App() {
     const formData = new FormData();
     formData.append('file', file);
 
+    setLoadingMsg('Detecting Players...');
     setLoading(true);
 
     try {
@@ -83,11 +93,13 @@ function App() {
       }
 
       setImages(extractedImages);
+      showToast('Successfully Detected Players', 'success');
     } catch (error) {
       console.error("Error uploading image: ", error);
-      alert("Error uploading image: " + error.message);
+      showToast("Error uploading image: " + error.message + ", Please try again later", "error");
     } finally {
       setLoading(false);
+      
     }
   };
 
@@ -100,6 +112,7 @@ function App() {
   };
 
   const handleImageClick = async (imageUrl) => {
+    setLoadingMsg('Generating 3D Model, this may take a while...');
     setLoading(true);
   
     try {
@@ -119,14 +132,15 @@ function App() {
       const objFileURL = URL.createObjectURL(objBlob);
   
       loadObjFile(objFileURL);
+      showToast('Successfully Generated Player', 'success');
     } catch (error) {
       console.error("Error generating .obj file: ", error);
-      alert("Error generating .obj file: " + error);
+      showToast("Error: " + error + ", please try again later", 'error');
       if (error.response) {
         console.error("Response data: ", error.response.data);
         console.error("Response status: ", error.response.status);
         console.error("Response headers: ", error.response.headers);
-        alert("Response data: " + error.response.data);
+        showToast("Error: " + error.response.data + ", please try again later", 'error');
       }
     } finally {
       setLoading(false);
@@ -197,7 +211,7 @@ function App() {
     const handleResize = () => {
       camera.aspect = sceneRef.current.clientWidth / window.innerHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(sceneRef.current.clientWidth, window.innerHeight);  // Update renderer size on window resize
+      renderer.setSize(sceneRef.current.clientWidth, window.innerHeight); 
     };
 
     window.addEventListener('resize', handleResize);
@@ -235,7 +249,15 @@ function App() {
             handleRemoveVideo={handleRemoveVideo}
           />
         )}
-        {loading && <LoadingPopup />}
+        {toast.message && (
+                <Toast
+                    message={toast.message}
+                    type={toast.type}
+                    duration={toast.duration}
+                    onClose={() => setToast({ ...toast, message: '' })}
+                />
+            )}
+        {loading && <LoadingPopup loadingMsg={loadingMsg} />}
         {images.length > 0 && (
           <DetectedPlayers images={images} handleImageClick={handleImageClick} />
         )}
