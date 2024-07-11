@@ -85,6 +85,7 @@ function App() {
       setImages(extractedImages);
     } catch (error) {
       console.error("Error uploading image: ", error);
+      alert("Error uploading image: " + error.message);
     } finally {
       setLoading(false);
     }
@@ -120,10 +121,12 @@ function App() {
       loadObjFile(objFileURL);
     } catch (error) {
       console.error("Error generating .obj file: ", error);
+      alert("Error generating .obj file: " + error);
       if (error.response) {
         console.error("Response data: ", error.response.data);
         console.error("Response status: ", error.response.status);
         console.error("Response headers: ", error.response.headers);
+        alert("Response data: " + error.response.data);
       }
     } finally {
       setLoading(false);
